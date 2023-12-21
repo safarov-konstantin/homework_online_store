@@ -25,14 +25,11 @@ class Product(models.Model):
 class Category(models.Model):
     name = models.CharField(max_length=100, verbose_name='наименование')
     description = models.TextField(verbose_name='описание')
-    
-    # пункт 3 задание 4 Внесите изменения в модель, добавьте поле created_at
-    created_at = models.DateTimeField(auto_now_add=True, verbose_name='создан в', **NULLABLE)
 
     def __str__(self) -> str:
         return f'{self.pk} {self.name}'
 
     class Meta:
-        verbose_name = 'продукт'
-        verbose_name_plural = 'продукты'
+        verbose_name = 'Категория'
+        verbose_name_plural = 'Категории'
         ordering = ('name', )
