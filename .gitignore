@@ -167,4 +167,4 @@ cython_debug/
 # VS Code
 .vscode/
 .pylintrc
-.env/
+ evn/
