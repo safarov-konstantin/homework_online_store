@@ -1,0 +1,26 @@
+{% extends 'catalog/base.html' %}
+
+{% block content %}
+  <div class="row">
+    <div class="col-12 mb-5">
+      <a class="btn btn-outline-success" href="{% url 'catalog:create_version' %}"> + Создать</a>
+    </div>
+    {% for object in object_list %}
+      <div class="col-md-4">
+        <div class="card mb-4 box-shadow">
+          <div class="card-body">
+            <p class="card-text">{{ object.name|title }} (V: {{ object.number }})</p>
+            <p class="card-text"> <b>Продукт: </b> {{ object.product }} </p>
+            <div class="d-flex justify-content-between align-items-center">
+              <div class="btn-group">
+                <a href="{% url 'catalog:version' object.pk %}" class="btn btn-sm btn-outline-secondary">View</a>
+                <a href="{% url 'catalog:edit_version' object.pk %}" class="btn btn-sm btn-outline-secondary">Edit</a>
+                <a href="{% url 'catalog:delete_version' object.pk %}" class="btn btn-sm btn-outline-danger">Delete</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+{% endblock %}

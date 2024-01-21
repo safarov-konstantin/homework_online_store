@@ -7,27 +7,16 @@
         <img src="{{ object.image|mymedia }}" alt="" width="100%" />
 
         <div class="card-body">
-          <h3>Наименование: {{ object.name }}</h3>
+          <h3>Наименование: {{ object.name }} (V: {{ object.number }})</h3>
           <div class="d-flex justify-content-between align-items-center">
             <ul class="list-unstyled mt-3 mb-4 text-start m-3">
               <li>
-                <b>Описание:</b> <br />
-                {{ object.description }}
+                <b>Продукт:</b> <br />
+                {{ object.product }}
               </li>
-
               <li>
-                <b>Цена за покупку:</b> <br />
-                {{ object.price }}
-              </li>
-
-              <li>
-                <b>Дата создания:</b> <br />
-                {{ object.date_of_creation }}
-              </li>
-
-              <li>
-                <b>Дата последнего изменения:</b> <br />
-                {{ object.last_modified_date }}
+                <b>Активная:</b> <br />
+                {{ object.is_active }}
               </li>
             </ul>
           </div>
