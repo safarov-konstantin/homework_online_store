@@ -18,18 +18,18 @@
           </div>
           <div class="card-footer"></div>
         </div>
-            <div class="col-6">
-                <div class="card-header">
-                <h4>Версии продута</h4>
-                </div>
-                <div class="card-body">
-                    {{ formset.management_form }}
-                    {% for form in formset.forms %}     
-                        {{ form.as_p }} 
-                    {% endfor %} 
-                </div>
-                <div class="card-footer"></div>
-            </div> 
+        <div class="col-6">
+          <div class="card-header">
+            <h4>Версии продута</h4>
+          </div>
+          <div class="card-body">
+            {{ formset.management_form }}
+            {% for form in formset.forms %}
+              {{ form.as_p }}
+            {% endfor %}
+          </div>
+          <div class="card-footer"></div>
+        </div>
       </div>
     </form>
   </div>

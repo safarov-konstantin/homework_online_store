@@ -2,9 +2,9 @@
 {% load castom_filter %}
 {% block content %}
   <div class="row mb-4">
-    
+    {% if user.is_authenticated %}
       <a href="{% url 'catalog:create_product' %}" class="btn btn-success"> + Создать продукт </a>
-    
+      {% endif %}
   </div>
   <div class="row">
     {% for object in object_list %}
@@ -25,7 +25,7 @@
                 <ul>
                    <b>Активные версии: </b> <br />
                    {% for version in object.version_set.all|active_version %}
-                    <li> {{version.name}} (V:{{ version.number }})</li>
+                      <li> {{version.name}} (V:{{ version.number }})</li>
                    {% endfor %} 
                 </ul>
               </li>
@@ -33,7 +33,9 @@
                 <p align="center">
                   <br />
                   <a href="{% url 'catalog:product' object.pk %}"><b>Подробнее </b></a> 
-                  <a href="{% url 'catalog:edit_product' object.pk %}"><b> | Редактировать</b></a>
+                  {% if user.is_authenticated %}   
+                    <a href="{% url 'catalog:edit_product' object.pk %}"><b> | Редактировать</b></a>
+                  {% endif %}
                 </p>
               </li>
             </ul>
