@@ -77,7 +77,7 @@ class ProductUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
             'catalog.set_category',
             'catalog.set_description',
         )
-        A = _user.groups.filter(name='moderator')
+    
         if _user == _instance.author:
             return True
         elif _user.groups.filter(name='moderator') and _user.has_perms(custom_perms):
