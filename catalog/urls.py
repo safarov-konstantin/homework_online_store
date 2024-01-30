@@ -11,7 +11,7 @@ from catalog.views import (
     VersionCreateView, 
     VersionUpdateView, 
     VersionDetailView,
-    VersionDeleteView
+    VersionDeleteView,
 )
 
 

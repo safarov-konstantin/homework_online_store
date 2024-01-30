@@ -4,6 +4,7 @@ from catalog.models import Product, Version
 from catalog.forms import ProductForm, VersionForm
 from django.views.generic import (CreateView, UpdateView, DeleteView, 
                                   ListView, DetailView, TemplateView)
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin, UserPassesTestMixin
 
 
 class ProductListView(ListView):
@@ -18,7 +19,7 @@ class ContatactTemplateView(TemplateView):
     template_name = 'catalog/contacts.html'
 
 
-class ProductCreateView(CreateView):
+class ProductCreateView(LoginRequiredMixin, CreateView):
     model = Product
     form_class = ProductForm
     success_url = reverse_lazy('catalog:index') 
@@ -43,7 +44,7 @@ class ProductCreateView(CreateView):
         return super().form_valid(form)     
 
 
-class ProductUpdateView(UpdateView):
+class ProductUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Product
     form_class = ProductForm
     success_url = reverse_lazy('catalog:index')
@@ -60,10 +61,28 @@ class ProductUpdateView(UpdateView):
     def form_valid(self, form):
         formset = self.get_context_data()['formset']
         self.object = form.save()
+        
         if formset.is_valid():
            formset.instance = self.object
-           formset.save() 
+           formset.save()
+
         return super().form_valid(form)       
+
+    def test_func(self):
+        _user = self.request.user
+        _instance = self.get_object()
+        
+        custom_perms = (
+            'catalog.set_is_published',
+            'catalog.set_category',
+            'catalog.set_description',
+        )
+        A = _user.groups.filter(name='moderator')
+        if _user == _instance.author:
+            return True
+        elif _user.groups.filter(name='moderator') and _user.has_perms(custom_perms):
+            return True
+        return self.handle_no_permission()
 
 
 class VersionListView(ListView):
