@@ -1,10 +1,14 @@
+from typing import Any
 from django.urls import reverse_lazy
 from django.forms import inlineformset_factory
-from catalog.models import Product, Version
+from catalog.models import Product, Version, Category
 from catalog.forms import ProductForm, VersionForm
 from django.views.generic import (CreateView, UpdateView, DeleteView, 
                                   ListView, DetailView, TemplateView)
-from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin, UserPassesTestMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from catalog.services import get_categories
+from django.conf import settings
+from django.core.cache import cache
 
 
 class ProductListView(ListView):
@@ -108,3 +112,17 @@ class VersionUpdateView(UpdateView):
 class VersionDeleteView(DeleteView):
     model = Version    
     success_url = reverse_lazy('catalog:versions')
+
+
+class CategoryListView(ListView):
+    def get_queryset(self, *args, **kwargs):
+        if settings.CACHES_ENABLED:
+            key = 'categories_list'    
+            queryset = cache.get(key)
+            if queryset is None:
+                queryset = get_categories()
+                cache.set(key, queryset)              
+        else:
+            queryset = get_categories()
+
+        return queryset

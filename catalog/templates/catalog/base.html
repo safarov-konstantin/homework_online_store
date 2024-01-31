@@ -28,6 +28,7 @@
     <nav class="ms-5">
         <a class="p-2 btn btn-outline-primary" href="{% url 'catalog:index' %}">Каталог</a>
         <a class="p-2 btn btn-outline-primary" href="{% url 'catalog:versions' %}">Версии продукта</a>
+        <a class="p-2 btn btn-outline-primary" href="{% url 'catalog:categories' %}">Категории</a>
         <a class="p-2 btn btn-outline-primary" href="{% url 'blog:list' %}">Блог</a>
         <a class="p-2 btn btn-outline-primary" href="{% url 'catalog:contacts' %}">Контакты</a>
         {% if user.is_authenticated %}
